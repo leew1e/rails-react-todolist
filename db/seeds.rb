@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+Todo.create(title: "Make a Rails-React-todolist", done: false)
+Todo.create(title: "View memes", done: false)
+Todo.create(title: "Have breakfast", done: false)
+Todo.create(title: "Get up early", done: false)
