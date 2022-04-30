@@ -1,2 +1,2 @@
 api: bundle exec rails server -p 3000
-web: yarn --cwd todo-app start
+web: set PORT=4000 && yarn --cwd todo-app start
