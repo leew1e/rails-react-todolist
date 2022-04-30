@@ -57,22 +57,37 @@ class TodosContainer extends Component {
 			.catch(error => console.log(error))
 	}
 
+	deleteTodo = (id) => {
+		axios.delete(`/api/v1/todos/${id}`)
+			.then(response => {
+				const todoIndex = this.state.todos.findIndex(x => x.id === id)
+				const todos = update(this.state.todos, {
+					$splice: [[todoIndex, 1]]
+				})
+				this.setState({
+					todos: todos
+				})
+			})
+			.catch(error => console.log(error))
+	}
+
 	render() {
 		return (
 			<div>
 				<div>
-					<ul>
-						{this.state.todos.map((todo) => {
-							return (
-								<li todo={todo} key={todo.id}>
-									<input className="status-tracker" type="checkbox" checked={todo.done}
-										onChange={(e) => this.updateTodo(e, todo.id)} />
-									<label>{todo.title}</label>
-									<span> (Delete) </span>
-								</li>
-							)
-						})}
-					</ul>
+					{this.state.todos.map((todo) => {
+						return (
+							<div todo={todo} key={todo.id}>
+								<input className="status-tracker" type="checkbox" checked={todo.done}
+									onChange={(e) => this.updateTodo(e, todo.id)} />
+								<label>{todo.title}</label>
+								<span className="btn-delete"
+									onClick={(e) => this.deleteTodo(todo.id)}>
+									x
+								</span>
+							</div>
+						)
+					})}
 				</div>
 				<div>
 					<input type="text" placeholder="Add new task..." maxLength="50"
