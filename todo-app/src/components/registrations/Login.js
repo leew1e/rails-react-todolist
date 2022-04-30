@@ -7,7 +7,6 @@ class Login extends Component {
         super(props);
         this.state = {
             username: '',
-            email: '',
             password: '',
             errors: ''
         };
@@ -23,11 +22,10 @@ class Login extends Component {
     handleSubmit = (event) => {
         event.preventDefault()
 
-        const { username, email, password } = this.state
-        
+        const { username, password } = this.state
+
         let user = {
             username: username,
-            email: email,
             password: password
         }
 
@@ -44,9 +42,13 @@ class Login extends Component {
             })
             .catch(error => console.log('API errors:', error))
     };
-    
+
     redirect = () => {
         this.props.history.push('/')
+    }
+
+    componentWillMount() {
+        return this.props.isLoggedIn ? this.redirect() : null
     }
 
     handleErrors = () => {
@@ -62,40 +64,48 @@ class Login extends Component {
     };
 
     render() {
-        const { username, email, password } = this.state
-        return(
+        const { username, password } = this.state
+        console.log("login", this.props)
+        return (
             <div>
                 <h1>Log In</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <input
-                        placeholder="username"
-                        type="text"
-                        name="username"
-                        value={username}
-                        onChange={this.handleChange}
-                    />
-                    <input
-                        placeholder="email"
-                        type="text"
-                        name="email"
-                        value={email}
-                        onChange={this.handleChange}
-                    />
-                    <input
-                        placeholder="password"
-                        type="password"
-                        name="password"
-                        value={password}
-                        onChange={this.handleChange}
-                    />
-                    <button placeholder="submit" type="submit">
-                        Log In
-                    </button>
+                    <div>
+                        <label for="username">User</label>
+                        <input
+                            placeholder="username"
+                            type="text"
+                            name="username"
+                            id="username"
+                            value={username}
+                            onChange={this.handleChange} />
+                    </div>
+                    <div>
+                        <label for="password">Password</label>
+                        <input
+                            placeholder="password"
+                            type="password"
+                            name="password"
+                            id="password"
+                            value={password}
+                            onChange={this.handleChange}
+                        />
+                    </div>
+                    <div>
+                        <button placeholder="submit" type="submit">
+                            Log In
+                        </button>
+                    </div>
                     <div>
                         or <Link to='/signup'>Sign up</Link>
                     </div>
 
                 </form>
+                <div>
+                    {
+                        this.state.errors ? this.handleErrors() : null
+                    }
+                </div>
             </div>
         );
     }

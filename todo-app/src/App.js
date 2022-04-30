@@ -1,28 +1,9 @@
-/*
 import React, { Component } from 'react';
-import './App.css';
-// Импорт пользовательского компонента
-import TodosContainer from './components/TodosContainer'
-
-function App() {
-  return (
-    <div className='main-container'>
-      <div>
-        <h1>Todo list:</h1>
-      </div>
-      <TodosContainer />
-    </div>
-  );
-}
-
-export default App;
-*/
-
-import React, { Component } from 'react';
-import axios from 'axios'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import axios from 'axios';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
-import Signup from './components/SignUp';
+import Signup from './components/registrations/Signup';
+import Login from './components/registrations/Login';
 
 class App extends Component {
   constructor(props) {
@@ -39,6 +20,7 @@ class App extends Component {
       user: data.user
     })
   }
+
   handleLogout = () => {
     this.setState({
       isLoggedIn: false,
@@ -65,12 +47,23 @@ class App extends Component {
   render() {
     return (
       <div>
+        {console.log("app", this.state)}
+        
         <BrowserRouter>
-          <Switch>
-            <Route exact path='/' component={<Home/>} />
-            <Route exact path='/login' component={<Login/>} />
-            <Route exact path='/signup' component={<Signup/>} />
-          </Switch>
+          <Routes>
+            <Route
+            path='/'
+            element={<Home {...{isLoggedIn: this.state.isLoggedIn, handleLogout: this.handleLogout}} />}
+            />
+            <Route
+              path='/login'
+              element={<Login {...{isLoggedIn: this.state.isLoggedIn, handleLogin: this.handleLogin}}/>}
+            />
+            <Route
+              path='/signup'
+              element={<Signup {...{isLoggedIn: this.state.isLoggedIn, handleLogin: this.handleLogin}}/>}
+            />
+          </Routes>
         </BrowserRouter>
       </div>
     );
