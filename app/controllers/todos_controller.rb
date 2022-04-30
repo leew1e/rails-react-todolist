@@ -1,6 +1,6 @@
 class TodosController < ApplicationController
   def index
-    todos = Todo.order("created_at DESC")
+    todos = Todo.where(user_id: session[:user_id]).order("created_at DESC")
     render json: todos
   end
 
@@ -20,9 +20,10 @@ class TodosController < ApplicationController
     todo.destroy
     head :no_content, status: :ok
   end
-  
+
   private
-    def todo_params
-      params.require(:todo).permit(:title, :done)
-    end
+
+  def todo_params
+    params.require(:todo).permit(:title, :done, :user_id)
+  end
 end

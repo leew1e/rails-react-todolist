@@ -7,7 +7,6 @@ import TodosContainer from './TodosContainer'
 const Home = (props) => {
 
     const handleClick = () => {
-        console.log("innerHandle", props.isLoggedIn)
         axios.delete('http://localhost:3000/logout', { withCredentials: true })
             .then(response => {
                 props.handleLogout()
@@ -15,26 +14,21 @@ const Home = (props) => {
             })
             .catch(error => console.log(error))
     }
-
     console.log("home", props)
+
+    // HACK: uses for debug, will be changed later
+    let accountButton;
+    if(props.isLoggedIn){
+        accountButton = <Link to='/' onClick={handleClick}>Log Out</Link>
+    } else {
+        accountButton = <Link to='/login'>Log In</Link>
+    }
 
     return (
         <div>
-            <Link to='/login'>Log In</Link>
+            {accountButton}
             <br></br>
-            <Link to='/signup'>Sign Up</Link>
-            <br></br>
-            {
-                props.isLoggedIn ?
-                    <Link to='/' onClick={handleClick}>Log Out</Link> : null
-            }
-
-            <div className='main-container'>
-                <div>
-                    <h1>Todo list:</h1>
-                </div>
-                <TodosContainer />
-            </div>
+            <TodosContainer {...{user_id: props.user_id}}/>
 
         </div>
     );

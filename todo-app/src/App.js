@@ -32,7 +32,7 @@ class App extends Component {
     axios.get('http://localhost:3000/logged_in', { withCredentials: true })
       .then(response => {
         if (response.data.logged_in) {
-          this.handleLogin(response)
+          this.handleLogin(response.data)
         } else {
           this.handleLogout()
         }
@@ -53,7 +53,7 @@ class App extends Component {
           <Routes>
             <Route
             path='/'
-            element={<Home {...{isLoggedIn: this.state.isLoggedIn, handleLogout: this.handleLogout}} />}
+            element={<Home {...{user_id: this.state.user.id, isLoggedIn: this.state.isLoggedIn, handleLogout: this.handleLogout}} />}
             />
             <Route
               path='/login'
