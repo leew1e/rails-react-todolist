@@ -1,4 +1,36 @@
+.main-container {
+  width: 60%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+
 .status-tracker:checked + label {
 	text-decoration: line-through;
 	color: #656565;
+  cursor: cell;
+}
+
+.btn-delete {
+  float:right;
+  border: none;
+  background-color: #ef2525;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.btn-delete:active {
+  background-color: white;
+  color: black;
+  border: 1px solid #656565;
+}
+
+.border-red {
+  border: 2px solid green;
 }

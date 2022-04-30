@@ -5,12 +5,12 @@ import TodosContainer from './components/TodosContainer'
 
 function App() {
   return (
-    <div>
-        <div>
-          <h1>Todo list:</h1>
-        </div>
-        <TodosContainer />
+    <div className='main-container'>
+      <div>
+        <h1>Todo list:</h1>
       </div>
+      <TodosContainer />
+    </div>
   );
 }
 
