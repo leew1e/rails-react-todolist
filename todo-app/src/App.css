@@ -15,7 +15,7 @@
 }
 
 .btn-delete {
-  float:right;
+  float: right;
   border: none;
   background-color: #ef2525;
   color: white;
@@ -26,11 +26,12 @@
 }
 
 .btn-delete:active {
+  float: right;
   background-color: white;
   color: black;
   border: 1px solid #656565;
 }
 
 .border-red {
-  border: 2px solid green;
+  border: 2px solid red;
 }

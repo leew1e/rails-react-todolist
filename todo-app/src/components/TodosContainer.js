@@ -74,10 +74,10 @@ class TodosContainer extends Component {
 	render() {
 		return (
 			<div>
-				<div className='border-red'>
+				<div>
 					{this.state.todos.map((todo) => {
 						return (
-							<div todo={todo} key={todo.id}>
+							<div className='border-red' todo={todo} key={todo.id}>
 								<input className="status-tracker" type="checkbox" checked={todo.done}
 									onChange={(e) => this.updateTodo(e, todo.id)} />
 								<label>{todo.title}</label>
