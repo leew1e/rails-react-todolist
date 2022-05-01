@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom'
 import Home from './components/Home';
 import Signup from './components/registrations/Signup';
 import Login from './components/registrations/Login';
+import { Routes, Route } from 'react-router-dom';
+import AuthenticationForm from './components/AuthenticationForm';
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +31,8 @@ class App extends Component {
   }
 
   loginStatus = () => {
-    axios.get('http://localhost:3000/logged_in', { withCredentials: true })
+    const checkLogin = 'http://localhost:3000/logged_in';
+    axios.get(checkLogin, { withCredentials: true })
       .then(response => {
         if (response.data.logged_in) {
           this.handleLogin(response.data)
@@ -46,27 +49,33 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        {console.log("app", this.state)}
-        
-        <BrowserRouter>
-          <Routes>
-            <Route
-            path='/'
-            element={<Home {...{user_id: this.state.user.id, isLoggedIn: this.state.isLoggedIn, handleLogout: this.handleLogout}} />}
+      <div class="">
+        <Routes>
+          <Route path='/home' 
+            element={<Home 
+                user_id = {this.state.user.id} 
+                isLoggedIn = {this.state.isLoggedIn} 
+                handleLogout = {this.handleLogout}/>} 
+          />
+          <Route path='/auth' 
+            element={<AuthenticationForm />} 
+          /> 
+            <Route path='/login' 
+              element={<Login 
+                isLoggedIn = {this.state.isLoggedIn} 
+                handleLogin = {this.handleLogin}/>} 
             />
-            <Route
-              path='/login'
-              element={<Login {...{isLoggedIn: this.state.isLoggedIn, handleLogin: this.handleLogin}}/>}
-            />
-            <Route
-              path='/signup'
-              element={<Signup {...{isLoggedIn: this.state.isLoggedIn, handleLogin: this.handleLogin}}/>}
-            />
-          </Routes>
-        </BrowserRouter>
+            <Route path='/signup' 
+              element={<Signup 
+                isLoggedIn = {this.state.isLoggedIn} 
+                handleLogin = {this.handleLogin}/>} 
+            />   
+            <Route path='*' 
+              render={() => 
+              <Navigate to="/home" />} 
+            />    
+        </Routes>
       </div>
     );
   }
 };
-export default App;

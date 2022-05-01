@@ -1,11 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
 .main-container {
-  width: 60%;
-  height: 60%;
+  border: 1px #ef2525;
+  font-family: 'Rubik', sans-serif;
+  margin: auto;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin: auto;
+  flex-grow: 1;
 }
 
 .status-tracker:checked + label {
@@ -25,13 +28,98 @@
   cursor: pointer;
 }
 
+.text-center {
+  text-align: center;
+}
+
+input {
+  margin-bottom: 12px;
+}
+
+.btn {
+  background-color: #e1ecf4;
+  border-radius: 3px;
+  border: 1px solid #7aa7c7;
+  box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+  color: #39739d;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 10px 5px;
+  outline: none;
+  padding: 8px .8em;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: #b3d3ea;
+  color: #2c5777;
+}
+
+.btn:focus {
+  box-shadow: 0 0 0 4px rgba(35, 161, 251, 0.15);
+}
+
+.btn:active {
+  background-color: #a0c7e4;
+  box-shadow: none;
+  color: #2c5777;
+}
+
 .btn-delete:active {
   float: right;
-  background-color: white;
+  background-color: #e1ecf4;
   color: black;
   border: 1px solid #656565;
 }
 
-.border-red {
-  border: 2px solid red;
+.btn-exit {
+  left: 10px;
+  top: 10px;
+  background-color: red;
+  color: white;
+}
+
+.w-10 {
+  width: 10em;
+}
+
+
+/* Styling todo-input component */
+.todo-input {
+  border: 1px solid #a0c7e4;
+  display: block;
+  padding: 10px 10px;
+  width: 40%;
+}
+
+/* Styling todo-list box */
+.todo-list {
+  overflow-y: scroll;
+  height: 300px;
+}    
+
+.todo-list::-webkit-scrollbar {
+  width: 10px;
+  background-color: #a0c7e4;
+}
+
+.todo-list::-webkit-scrollbar-thumb {
+  background-color: #223c50;
+}
+
+.todo-list::-webkit-scrollbar-track {
+  box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
+  background-color: #8dbee9;
+}
+
+/* Styling todo-items */
+.todo-list .todo-item {
+  position: relative;
+  border-left: 4px solid #337AB7;
+  padding: 2px;
+  margin: 5px 10px;
+  box-shadow: 2px 2px 2px 2px #656565;
 }

@@ -77,28 +77,25 @@ class TodosContainer extends Component {
 				<div>
 					<h1>Todo list:</h1>
 				</div>
-				<div>
-					<div>
-						{this.state.todos.map((todo) => {
-							return (
-								<div className='border-red' todo={todo} key={todo.id}>
-									<input className="status-tracker" type="checkbox" checked={todo.done}
-										onChange={(e) => this.updateTodo(e, todo.id)} />
-									<label>{todo.title}</label>
-									<button className="btn-delete"
-										onClick={(e) => this.deleteTodo(todo.id)}>
-										x
-									</button>
-								</div>
-							)
-						})}
-					</div>
-					<div>
-						<input type="text" placeholder="Add new task..." maxLength="50"
-							onKeyPress={this.createTodo} onChange={this.handleChange}
-							value={this.state.inputValue} />
-					</div>
+				<input className='todo-input' type="text" placeholder="Add new task..." maxLength="50"
+					onKeyPress={this.createTodo} onChange={this.handleChange}
+					value={this.state.inputValue} />
+				<div className='todo-list'>
+					{this.state.todos.map((todo) => {
+						return (
+							<div className='todo-item' todo={todo} key={todo.id}>
+								<input className="status-tracker" type="checkbox" checked={todo.done}
+									onChange={(e) => this.updateTodo(e, todo.id)} />
+								<label>{todo.title}</label>
+								<button className="btn-delete"
+									onClick={(e) => this.deleteTodo(todo.id)}>
+									x
+								</button>
+							</div>
+						)
+					})}
 				</div>
+
 			</div>
 		)
 	}

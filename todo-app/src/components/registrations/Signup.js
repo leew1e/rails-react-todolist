@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
-class Signup extends Component {
+
+export default class Signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,7 +32,6 @@ class Signup extends Component {
             .then(response => {
                 if (response.data.status === 'created') {
                     this.props.handleLogin(response.data)
-                    this.redirect()
                 } else {
                     this.setState({
                         errors: response.data.errors
@@ -40,10 +40,6 @@ class Signup extends Component {
             })
             .catch(error => console.log('API errors:', error))
     };
-
-    redirect = () => {
-        this.props.history.push('/')
-    }
 
     handleErrors = () => {
         return (
@@ -59,47 +55,53 @@ class Signup extends Component {
 
     render() {
         const { username, password } = this.state
+        const auth = this.props.isLoggedIn;
+
         return (
-            <div>
-                <h1>Sign Up</h1>
-                <form onSubmit={this.handleSubmit}>
-                <div>
-                        <label for="username">User</label>
-                        <input
-                            placeholder="username"
-                            type="text"
-                            name="username"
-                            id="username"
-                            value={username}
-                            onChange={this.handleChange} />
-                    </div>
+            <>
+                {/* If authentication was ok */}
+                {auth && <Navigate to="/home" replace />}
+
+                <div className='main-container text-center'>
+                    <h1>Sign Up</h1>
+                    <form onSubmit={this.handleSubmit}>
+                        <div>
+                            <label for="username">User</label><br />
+                            <input
+                                placeholder="Type your username..."
+                                type="text"
+                                name="username"
+                                id="username"
+                                value={username}
+                                onChange={this.handleChange} />
+                        </div>
+                        <div>
+                            <label for="password">Password</label><br />
+                            <input
+                                placeholder="Type your password..."
+                                type="password"
+                                name="password"
+                                id="password"
+                                value={password}
+                                onChange={this.handleChange}
+                            />
+                        </div>
+                        <div>
+                            <button className='btn' placeholder="submit" type="submit">
+                                Sign Up
+                            </button>
+                        </div>
+                        <div>
+                            or <Link to='/login'>Log in</Link>
+                        </div>
+                    </form>
                     <div>
-                        <label for="password">Password</label>
-                        <input
-                            placeholder="password"
-                            type="password"
-                            name="password"
-                            id="password"
-                            value={password}
-                            onChange={this.handleChange}
-                        />
+                        {
+                            this.state.errors ? this.handleErrors() : null
+                        }
                     </div>
-                    <div>
-                        <button placeholder="submit" type="submit">
-                            Sign Up
-                        </button>
-                    </div>
-                    <div>
-                        or <Link to='/login'>Log in</Link>
-                    </div>
-                </form>
-                <div>
-                    {
-                        this.state.errors ? this.handleErrors() : null
-                    }
                 </div>
-            </div>
+            </>
         );
     }
 }
-export default Signup;

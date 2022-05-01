@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
 class Login extends Component {
     constructor(props) {
@@ -33,7 +33,6 @@ class Login extends Component {
             .then(response => {
                 if (response.data.logged_in) {
                     this.props.handleLogin(response.data)
-                    this.redirect()
                 } else {
                     this.setState({
                         errors: response.data.errors
@@ -42,14 +41,6 @@ class Login extends Component {
             })
             .catch(error => console.log('API errors:', error))
     };
-
-    redirect = () => {
-        this.props.history.push('/')
-    }
-
-    componentWillMount() {
-        return this.props.isLoggedIn ? this.redirect() : null
-    }
 
     handleErrors = () => {
         return (
@@ -65,48 +56,54 @@ class Login extends Component {
 
     render() {
         const { username, password } = this.state
-        console.log("login", this.props)
-        return (
-            <div>
-                <h1>Log In</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <div>
-                        <label for="username">User</label>
-                        <input
-                            placeholder="username"
-                            type="text"
-                            name="username"
-                            id="username"
-                            value={username}
-                            onChange={this.handleChange} />
-                    </div>
-                    <div>
-                        <label for="password">Password</label>
-                        <input
-                            placeholder="password"
-                            type="password"
-                            name="password"
-                            id="password"
-                            value={password}
-                            onChange={this.handleChange}
-                        />
-                    </div>
-                    <div>
-                        <button placeholder="submit" type="submit">
-                            Log In
-                        </button>
-                    </div>
-                    <div>
-                        or <Link to='/signup'>Sign up</Link>
-                    </div>
+        const auth = this.props.isLoggedIn;
 
-                </form>
-                <div>
-                    {
-                        this.state.errors ? this.handleErrors() : null
-                    }
+        return (
+            <>
+                {/* If authentication was ok */}
+                {auth && <Navigate to="/home" replace />}
+
+                <div className='main-container text-center'>
+                    <h1>Log In</h1>
+                    <form onSubmit={this.handleSubmit}>
+                        <div>
+                            <label for="username">User</label><br />
+                            <input
+                                placeholder="Type your username..."
+                                type="text"
+                                name="username"
+                                id="username"
+                                value={username}
+                                onChange={this.handleChange} />
+                        </div>
+                        <div>
+                            <label for="password">Password</label><br />
+                            <input
+                                placeholder="Type your password..."
+                                type="password"
+                                name="password"
+                                id="password"
+                                value={password}
+                                onChange={this.handleChange}
+                            />
+                        </div>
+                        <div>
+                            <button className='btn w-10' placeholder="submit" type="submit">
+                                Log In
+                            </button>
+                        </div>
+                        <div>
+                            or <Link to='/signup'>Sign up</Link>
+                        </div>
+
+                    </form>
+                    <div>
+                        {
+                            this.state.errors ? this.handleErrors() : null
+                        }
+                    </div>
                 </div>
-            </div>
+            </>
         );
     }
 }
