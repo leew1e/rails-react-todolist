@@ -71,8 +71,7 @@ export default class App extends Component {
                 handleLogin = {this.handleLogin}/>} 
             />   
             <Route path='*' 
-              render={() => 
-              <Navigate to="/home" />} 
+              element={<Navigate to="/home" />} 
             />    
         </Routes>
       </div>

@@ -97,7 +97,7 @@ class Login extends Component {
                         </div>
 
                     </form>
-                    <div>
+                    <div className='text-danger'>
                         {
                             this.state.errors ? this.handleErrors() : null
                         }
