@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 export default class Signup extends Component {
@@ -55,13 +55,8 @@ export default class Signup extends Component {
 
     render() {
         const { username, password } = this.state
-        const auth = this.props.isLoggedIn;
-
         return (
             <>
-                {/* If authentication was ok */}
-                {auth && <Navigate to="/home" replace />}
-
                 <div className='main-container text-center'>
                     <h1>Sign Up</h1>
                     <form onSubmit={this.handleSubmit}>

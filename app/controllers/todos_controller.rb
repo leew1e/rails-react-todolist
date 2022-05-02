@@ -1,6 +1,6 @@
 class TodosController < ApplicationController
-  def index
-    todos = Todo.where(user_id: session[:user_id]).order("created_at DESC")
+  def show
+    todos = Todo.where(user_id: id).order("created_at DESC")
     render json: todos
   end
 

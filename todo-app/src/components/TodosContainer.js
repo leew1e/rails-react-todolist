@@ -10,8 +10,8 @@ function TodosContainer(props) {
 	const [mode, setMode] = useState(undefined);
 	const [filtered, setFiltered] = useState([]);
 
-	function getTodos() {
-		axios.get("/api/v1/todos")
+	function getTodos(user_id) {
+		axios.get(`/api/v1/todos/${user_id}`)
 			.then(response => {
 				setTodos(response.data)
 			})
@@ -19,7 +19,7 @@ function TodosContainer(props) {
 	}
 	useEffect(
 		() => {
-			getTodos();
+			getTodos(props.user_id);
 		}, []);
 
 	useEffect(

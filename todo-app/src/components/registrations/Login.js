@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class Login extends Component {
     constructor(props) {
@@ -56,13 +56,8 @@ class Login extends Component {
 
     render() {
         const { username, password } = this.state
-        const auth = this.props.isLoggedIn;
-
         return (
             <>
-                {/* If authentication was ok */}
-                {auth && <Navigate to="/home" replace />}
-
                 <div className='main-container text-center'>
                     <h1>Log In</h1>
                     <form onSubmit={this.handleSubmit}>

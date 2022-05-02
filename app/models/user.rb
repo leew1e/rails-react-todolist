@@ -1,7 +1,7 @@
 class User < ApplicationRecord
-    has_secure_password
-    
-    validates :username, presence: true
-    validates :username, uniqueness: true
-    validates :username, length: { minimum: 4 }
+  has_secure_password
+  has_many :todos, dependent: :destroy
+
+  validates :username, presence: true, uniqueness: true
+  validates :password, presence: true, length: { minimum: 8 }
 end
