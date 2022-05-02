@@ -6,23 +6,20 @@ import TodosContainer from './TodosContainer'
 
 function Home (props) {
     const navigate = useNavigate();
-
-    // Unauthorized access
-    if (!props.isLoggedIn) navigate("/auth");
-
     const handleClick = () => {
         axios.delete('http://localhost:3000/logout', { withCredentials: true })
             .then(response => {
                 props.handleLogout()
-                navigate("/auth")
+                navigate("/")
             })
             .catch(error => console.log(error))
     }
 
     return (
         <div>
-            {props.isLoggedIn && <button className='btn btn-exit' onClick={handleClick}>Log Out</button>}
-            <br></br>
+            {props.isLoggedIn 
+                && <button className='btn btn-danger btn-exit' onClick={handleClick}>Log Out</button>}
+
             <TodosContainer user_id = {props.user_id}/>
         </div>
     );

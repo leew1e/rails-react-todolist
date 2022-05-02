@@ -16,17 +16,6 @@
   cursor: cell;
 }
 
-.btn-delete {
-  float: right;
-  border: none;
-  background-color: #ef2525;
-  color: white;
-  font-size: 16px;
-  border-radius: 8px;
-  vertical-align: middle;
-  cursor: pointer;
-}
-
 .text-center {
   text-align: center;
 }
@@ -75,24 +64,40 @@ input {
   color: #2c5777;
 }
 
-.btn-delete:active {
-  float: right;
+.btn-action {
+  color: white;
+  background-color: #337AB7;
+  box-sizing: border-box;
+  border: none;
+  margin: 5px 5px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-action:hover {
+  box-shadow: 0px 0px 5px #223c50;
+}
+
+.btn-action:active {
   background-color: #e1ecf4;
   color: black;
   border: 1px solid #656565;
 }
 
+.btn-danger {
+  background-color: #ef2525;
+  color: white;
+}
+
 .btn-exit {
   left: 10px;
   top: 10px;
-  background-color: red;
-  color: white;
 }
 
 .w-10 {
   width: 10em;
 }
-
 
 /* Styling todo-input component */
 .todo-input {
@@ -130,14 +135,27 @@ input {
 
 /* Styling todo-items */
 .todo-list .todo-item {
+  display: flex;
   position: relative;
   border-left: 4px solid #337AB7;
-  padding: 2px;
+  padding: 3px;
+  height: 35px;
   margin: 5px 10px;
   box-shadow: 2px 2px 2px 2px #656565;
 }
 
-.change-status {
+.todo-update-input {
+  flex: 2;
+  height: 100%;
+  border: 1px solid #dadada;
+  box-sizing: border-box;
+}
+
+.todo-data {
+  width: 88%;
+}
+
+.change-status-bar {
   display: flex;
-  margin-bottom: 10px;
+  margin: 10px;
 }

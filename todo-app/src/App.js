@@ -48,31 +48,45 @@ export default class App extends Component {
   }
 
   render() {
+    const auth = this.state.isLoggedIn;
+
     return (
       <div class="">
         <Routes>
-          <Route path='/home' 
-            element={<Home 
-                user_id = {this.state.user.id} 
-                isLoggedIn = {this.state.isLoggedIn} 
-                handleLogout = {this.handleLogout}/>} 
+          <Route path='/home'
+            element={auth
+              ? <Home
+                user_id={this.state.user.id}
+                isLoggedIn={this.state.isLoggedIn}
+                handleLogout={this.handleLogout} />
+              : <Navigate to="/auth" replace />
+            }
           />
-          <Route path='/auth' 
-            element={<AuthenticationForm />} 
-          /> 
-            <Route path='/login' 
-              element={<Login 
-                isLoggedIn = {this.state.isLoggedIn} 
-                handleLogin = {this.handleLogin}/>} 
-            />
-            <Route path='/signup' 
-              element={<Signup 
-                isLoggedIn = {this.state.isLoggedIn} 
-                handleLogin = {this.handleLogin}/>} 
-            />   
-            <Route path='*' 
-              element={<Navigate to="/home" />} 
-            />    
+          <Route path='/auth'
+            element={!auth
+              ? <AuthenticationForm />
+              : <Navigate to="/home" replace />
+            }
+          />
+          <Route path='/login'
+            element={!auth
+              ? <Login
+                isLoggedIn={this.state.isLoggedIn}
+                handleLogin={this.handleLogin} />
+              : <Navigate to="/home" replace />
+            }
+          />
+          <Route path='/signup'
+            element={!auth
+              ? <Signup
+                isLoggedIn={this.state.isLoggedIn}
+                handleLogin={this.handleLogin} />
+              : <Navigate to="/home" replace />
+            }
+          />
+          <Route path='*'
+            element={<Navigate to="/auth" />}
+          />
         </Routes>
       </div>
     );

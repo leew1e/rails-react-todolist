@@ -5,6 +5,8 @@ import update from 'immutability-helper'
 function TodosContainer(props) {
 	const [todos, setTodos] = useState([]);
 	const [inputValue, setInputValue] = useState('');
+	const [edit, setEdit] = useState(null);
+	const [editValue, setEditValue] = useState('');
 	const [mode, setMode] = useState(undefined);
 	const [filtered, setFiltered] = useState([]);
 
@@ -19,7 +21,7 @@ function TodosContainer(props) {
 		() => {
 			getTodos();
 		}, []);
-	
+
 	useEffect(
 		() => {
 			todoFilter(mode);
@@ -43,7 +45,19 @@ function TodosContainer(props) {
 		}
 	}
 
-	function updateTodo(e, id) {
+	function updateTodo(id) {
+		axios.put(`/api/v1/todos/${id}`, { todo: { title: editValue } })
+			.then(response => {
+				const todoIndex = todos.findIndex(x => x.id === response.data.id)
+				const newTodos = update(todos, {
+					[todoIndex]: { $set: response.data }
+				})
+				setTodos(newTodos)
+				editTodo(null, '')
+			}).catch(error => console.log(error))
+	}
+
+	function statusTodo(e, id) {
 		axios.put(`/api/v1/todos/${id}`, { todo: { done: e.target.checked } })
 			.then(response => {
 				const todoIndex = todos.findIndex(x => x.id === response.data.id)
@@ -67,8 +81,13 @@ function TodosContainer(props) {
 			.catch(error => console.log(error))
 	}
 
+	function editTodo(id, title) {
+		setEdit(id)
+		setEditValue(title)
+	}
+
 	function todoFilter(status) {
-		if(undefined === status)
+		if (undefined === status)
 			setFiltered(todos);
 		else {
 			setFiltered(todos.filter(p => p.done === status));
@@ -78,7 +97,6 @@ function TodosContainer(props) {
 	function handleStatus(status) {
 		setMode(status)
 		todoFilter(status)
-		console.log("status", mode)
 	}
 
 	return (
@@ -90,8 +108,8 @@ function TodosContainer(props) {
 				<input className='todo-input' type="text" placeholder="Add new task..." maxLength="50"
 					onKeyPress={createTodo} onChange={handleChange}
 					value={inputValue} />
-				<div className='change-status'>
-					{}
+				<div className='change-status-bar'>
+					{ }
 
 					<div className="btn w-10"
 						onClick={() => handleStatus(undefined)}>
@@ -107,18 +125,39 @@ function TodosContainer(props) {
 					</div>
 				</div>
 				<div className='todo-list'>
-					{filtered.length > 0 
+					{filtered.length > 0
 						? filtered.map((todo) => {
 							return (
 								<div className='todo-item' todo={todo} key={todo.id}>
-									<input className="status-tracker" type="checkbox" checked={todo.done}
-										onChange={(e) => updateTodo(e, todo.id)} />
-									<label>{todo.title}</label>
-									<button className="btn-delete"
-										onClick={() => deleteTodo(todo.id)}>
-										x
-									</button>
+									{
+										edit === todo.id ?
+											<>
+												<input type="text" className='todo-update-input'
+													onChange={(e) => setEditValue(e.target.value)} value={editValue} />
+												<button className="btn-action "
+													onClick={() => updateTodo(todo.id)}>
+													✓
+												</button>
+											</>
+											:
+											<>
+												<div className='todo-data'>
+													<input className="status-tracker" type="checkbox" checked={todo.done}
+														onChange={(e) => statusTodo(e, todo.id)} />
+													<label>{todo.title}</label>
+												</div>
+												<button className="btn-action"
+													onClick={() => editTodo(todo.id, todo.title)}>
+													+
+												</button>
+												<button className="btn-action"
+													onClick={() => deleteTodo(todo.id)}>
+													x
+												</button>
+											</>
+									}
 								</div>
+
 							)
 						})
 						: <h2 className='text-center align-middle'> No one todo here </h2>}
