@@ -1,6 +1,6 @@
 class TodosController < ApplicationController
   def show
-    todos = Todo.where(user_id: id).order("created_at DESC")
+    todos = Todo.where(user_id: params[:id]).order("created_at DESC")
     render json: todos
   end
 
