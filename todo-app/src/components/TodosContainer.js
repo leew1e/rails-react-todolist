@@ -99,6 +99,11 @@ function TodosContainer(props) {
 		todoFilter(status)
 	}
 
+	function isActive(status) {
+		const activeStyle = { boxShadow: '2px 2px #2baeff' }
+		return mode === status ? activeStyle : null
+	}
+
 	return (
 		<>
 			<div className='main-container'>
@@ -109,17 +114,15 @@ function TodosContainer(props) {
 					onKeyPress={createTodo} onChange={handleChange}
 					value={inputValue} />
 				<div className='change-status-bar'>
-					{ }
-
-					<div className="btn w-10"
+					<div className="btn w-10" style={isActive(undefined)}
 						onClick={() => handleStatus(undefined)}>
 						All
 					</div>
-					<div className="btn w-10"
+					<div className="btn w-10" style={isActive(false)}
 						onClick={() => handleStatus(false)}>
 						Active
 					</div>
-					<div className="btn w-10"
+					<div className="btn w-10" style={isActive(true)}
 						onClick={() => handleStatus(true)}>
 						Closed
 					</div>
@@ -134,7 +137,7 @@ function TodosContainer(props) {
 											<>
 												<input type="text" className='todo-update-input'
 													onChange={(e) => setEditValue(e.target.value)} value={editValue} />
-												<button className="btn-action "
+												<button className="btn-action btn-success"
 													onClick={() => updateTodo(todo.id)}>
 													✓
 												</button>
@@ -146,11 +149,11 @@ function TodosContainer(props) {
 														onChange={(e) => statusTodo(e, todo.id)} />
 													<label>{todo.title}</label>
 												</div>
-												<button className="btn-action"
+												<button className="btn-action btn-primary"
 													onClick={() => editTodo(todo.id, todo.title)}>
 													+
 												</button>
-												<button className="btn-action"
+												<button className="btn-action btn-danger"
 													onClick={() => deleteTodo(todo.id)}>
 													x
 												</button>

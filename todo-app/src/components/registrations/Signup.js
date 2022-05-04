@@ -67,6 +67,7 @@ export default class Signup extends Component {
                                 type="text"
                                 name="username"
                                 id="username"
+                                className='auth-input'
                                 value={username}
                                 onChange={this.handleChange} />
                         </div>
@@ -77,6 +78,7 @@ export default class Signup extends Component {
                                 type="password"
                                 name="password"
                                 id="password"
+                                className='auth-input'
                                 value={password}
                                 onChange={this.handleChange}
                             />
