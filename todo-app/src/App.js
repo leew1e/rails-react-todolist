@@ -21,6 +21,7 @@ export default class App extends Component {
       isLoggedIn: true,
       user: data.user
     })
+    localStorage.setItem('token', data.token)
   }
 
   handleLogout = () => {
@@ -28,11 +29,11 @@ export default class App extends Component {
       isLoggedIn: false,
       user: {}
     })
+    localStorage.removeItem('token')
   }
 
   loginStatus = () => {
-    const checkLogin = '/logged_in';
-    axios.get(checkLogin, { withCredentials: true })
+    axios.get("/api/v1/logged_in", { withCredentials: true })
       .then(response => {
         if (response.data.logged_in) {
           this.handleLogin(response.data)

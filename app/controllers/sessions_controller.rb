@@ -4,9 +4,12 @@ class SessionsController < ApplicationController
 
     if @user && @user.authenticate(session_params[:password])
       login!
+      @token = AuthTokenService.encode(@user.id)
+
       render json: {
                logged_in: true,
                user: @user,
+               token: @token,
              }
     else
       render json: {

@@ -7,7 +7,7 @@ import TodosContainer from './TodosContainer'
 function Home (props) {
     const navigate = useNavigate();
     const handleClick = () => {
-        axios.delete('/logout', { withCredentials: true })
+        axios.delete('/api/v1/logout', { withCredentials: true })
             .then(response => {
                 props.handleLogout()
                 navigate("/")

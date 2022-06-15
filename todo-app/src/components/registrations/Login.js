@@ -22,14 +22,9 @@ class Login extends Component {
     handleSubmit = (event) => {
         event.preventDefault()
 
-        const { username, password } = this.state
+        let user = { username: this.state.username, password: this.state.password }
 
-        let user = {
-            username: username,
-            password: password
-        }
-
-        axios.post('/login', { user }, { withCredentials: true })
+        axios.post('/api/v1/login', { user }, { withCredentials: true })
             .then(response => {
                 if (response.data.logged_in) {
                     this.props.handleLogin(response.data)

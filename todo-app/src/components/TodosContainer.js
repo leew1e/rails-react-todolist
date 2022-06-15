@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import update from 'immutability-helper'
 
+axios.interceptors.request.use(
+	config => {
+		config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+		return config;
+	}
+);
+
 function TodosContainer(props) {
 	const [todos, setTodos] = useState([]);
 	const [inputValue, setInputValue] = useState('');
@@ -16,6 +23,7 @@ function TodosContainer(props) {
 				setTodos(response.data)
 			})
 			.catch(error => console.log(error))
+			console.log(localStorage.getItem('token'))
 	}
 	useEffect(
 		() => {
@@ -34,14 +42,21 @@ function TodosContainer(props) {
 
 	function createTodo(e) {
 		if (e.key === 'Enter' && e.target.value) {
-			axios.post('/api/v1/todos', { todo: { title: e.target.value, done: false, user_id: props.user_id } })
-				.then(response => {
-					const newTodos = update(todos, {
-						$splice: [[0, 0, response.data]]
-					})
-					setTodos(newTodos)
-					setInputValue('')
-				}).catch(error => console.log(error))
+			axios.post('/api/v1/todos', 
+			{ 
+				todo: { 
+					title: e.target.value, 
+					done: false, 
+					user_id: props.user_id 
+				} 
+			})
+			.then(response => {
+				const newTodos = update(todos, {
+					$splice: [[0, 0, response.data]]
+				})
+				setTodos(newTodos)
+				setInputValue('')
+			}).catch(error => console.log(error))
 		}
 	}
 

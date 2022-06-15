@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+=begin
   def index
     @users = User.all
     if @users
@@ -26,7 +27,7 @@ class UsersController < ApplicationController
              }
     end
   end
-
+=end
   def create
     @user = User.new(user_params)
     if @user.save
