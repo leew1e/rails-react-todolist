@@ -27,7 +27,8 @@ class Login extends Component {
         axios.post('/api/v1/login', { user }, { withCredentials: true })
             .then(response => {
                 if (response.data.logged_in) {
-                    this.props.handleLogin(response.data)
+                    this.props.handleLogin(response.data)    
+                    localStorage.setItem('token', response.data.token)
                 } else {
                     this.setState({
                         errors: response.data.errors
